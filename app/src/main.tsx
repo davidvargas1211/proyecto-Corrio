@@ -1,6 +1,7 @@
 import { FormEvent, KeyboardEvent, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import './tokens.css';
+import './mobile-menu.css';
 
 type FormValues = { amount: string; currency: string; company: string; email: string; message: string };
 type FormErrors = Partial<Record<keyof FormValues, string>>;
@@ -12,8 +13,10 @@ function Brand() { return <a href="#top" className="brand" aria-label="Straiton 
 
 function Header({ onAssessment }: { onAssessment: () => void }) {
   const [open, setOpen] = useState(false);
+  const menuButton = useRef<HTMLButtonElement>(null);
   const go = (target: string) => { setOpen(false); document.querySelector(target)?.scrollIntoView({ behavior: 'smooth', block: 'start' }); };
-  return <header className="site-header" onKeyDown={(event: KeyboardEvent<HTMLElement>) => { if (event.key === 'Escape') setOpen(false); }}><div className="shell header-inner"><Brand /><button type="button" className="menu-toggle" aria-label="Toggle navigation" aria-expanded={open} onClick={() => setOpen(!open)}><span /><span /></button><nav className={open ? 'nav open' : 'nav'} aria-label="Main navigation"><button type="button" onClick={() => go('#how-it-works')}>How it works</button><button type="button" onClick={() => go('#what-we-review')}>What we review</button><button type="button" onClick={() => go('#questions')}>Questions</button><button type="button" className="button button-small" onClick={() => { setOpen(false); onAssessment(); }}>Request an assessment <Arrow /></button></nav></div></header>;
+  const closeMenu = () => { setOpen(false); menuButton.current?.focus(); };
+  return <header className={`site-header${open ? ' menu-is-open' : ''}`} onKeyDown={(event: KeyboardEvent<HTMLElement>) => { if (event.key === 'Escape') closeMenu(); }}><div className="shell header-inner"><Brand /><button ref={menuButton} type="button" className="menu-toggle" aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="main-navigation" onClick={() => setOpen(current => !current)}><span /><span /><span /></button><nav id="main-navigation" className={open ? 'nav open' : 'nav'} aria-label="Main navigation"><p className="nav-label">EXPLORE STRAITON</p><button type="button" onClick={() => go('#how-it-works')}>How it works</button><button type="button" onClick={() => go('#what-we-review')}>What we review</button><button type="button" onClick={() => go('#questions')}>Questions</button><button type="button" className="button button-small" onClick={() => { setOpen(false); onAssessment(); }}>Request an assessment <Arrow /></button></nav></div></header>;
 }
 
 function AssessmentObject() { return <div className="assessment-object" aria-label="Illustration of payment assessment stages"><div className="object-heading"><span className="eyebrow">PAYMENT ASSESSMENT</span><span className="object-status"><i /> Ready to review</span></div><div className="route"><div className="route-point"><span>From</span><strong>UAE</strong><small>Funding context</small></div><div className="route-line"><i /><b /></div><div className="route-point"><span>To</span><strong>India</strong><small>Supplier payment</small></div></div><dl className="assessment-list"><div><dt>Payment context</dt><dd><Check /> Added for review</dd></div><div><dt>Quote structure</dt><dd><Check /> Explained before funding</dd></div><div><dt>Next action</dt><dd><span className="pending-dot" /> Confirmed for this request</dd></div></dl><div className="object-footer"><span>Fiat in · Fiat out</span><span>Illustrative flow</span></div></div>; }

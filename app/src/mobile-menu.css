@@ -6,7 +6,7 @@
   .menu-toggle span{display:block;width:20px;height:1.5px;background:var(--ink);transition:transform .18s ease,opacity .18s ease}
   .menu-is-open .menu-toggle span:first-child{transform:translateY(6.5px) rotate(45deg)}
   .menu-is-open .menu-toggle span:nth-child(2){opacity:0}.menu-is-open .menu-toggle span:last-child{transform:translateY(-6.5px) rotate(-45deg)}
-  .nav{position:absolute;top:65px;right:0;left:0;display:none;align-items:stretch;gap:0;padding:20px 20px 24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff;box-shadow:0 20px 34px #122d3920}
+  .nav{position:absolute;top:65px;right:0;left:0;display:none;flex-direction:column;align-items:stretch;gap:0;padding:20px 20px 24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:#fff;box-shadow:0 20px 34px #122d3920}
   .nav.open{display:flex}.nav-label{display:block;margin:0 0 8px;color:var(--teal);font-size:10px;font-weight:800;letter-spacing:.12em}.nav>button:not(.button){min-height:52px;padding:0;border-bottom:1px solid #e4eae8;text-align:left;font-size:16px;font-weight:700}.nav .button{width:100%;margin-top:20px}
 }
 @media(prefers-reduced-motion:reduce){.menu-toggle span{transition:none}}
